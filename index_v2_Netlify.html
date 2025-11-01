@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="ro">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Alegerea logo-ului / Logo-Auswahl</title>
+  <meta name="description" content="Sondaj vizual pentru alegerea logo-ului final (Flowin vs Timora PRO)." />
+  <style>
+    :root{
+      --bg:#0b1324; --card:#111a2e; --text:#ffffff; --muted:#c9d1e0;
+      --accent:#19b6ff; --accent-2:#2a70ff; --border:#23314f;
+    }
+    html,body{margin:0;background:var(--bg);color:var(--text);font:16px/1.55 system-ui,Segoe UI,Roboto,Helvetica,Arial}
+    .wrap{max-width:1000px;margin:40px auto;padding:24px}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:24px}
+    h1{margin:0 0 8px;font-size:28px}
+    .muted{color:var(--muted)}
+    .lang-switch{display:flex;gap:8px;margin:12px 0 20px}
+    .lang-switch button{
+      background:#0f1a30;border:1px solid var(--border);color:var(--muted);
+      padding:8px 12px;border-radius:999px;cursor:pointer
+    }
+    .lang-switch button.active{color:#fff;border-color:var(--accent);box-shadow:0 0 0 2px #0a2030}
+    .hero{margin:8px 0 16px}
+    .hero img{width:100%;height:auto;border-radius:12px;border:1px solid var(--border);display:block}
+    fieldset{border:1px solid var(--border);border-radius:12px;padding:16px;margin:16px 0}
+    legend{padding:0 6px;color:var(--muted)}
+    label{display:block;margin:6px 0}
+    textarea, input[type="text"]{
+      width:100%;background:#0f1a30;color:#fff;border:1px solid var(--border);
+      border-radius:10px;padding:10px
+    }
+    .row{display:grid;gap:12px}
+    .actions{display:flex;gap:12px;margin-top:16px;flex-wrap:wrap}
+    .btn{
+      background:linear-gradient(90deg,var(--accent),var(--accent-2));
+      color:#00101a;border:none;padding:12px 18px;border-radius:10px;cursor:pointer;font-weight:600
+    }
+    .btn.secondary{background:#0f1a30;color:#fff;border:1px solid var(--border)}
+    .note{font-size:13px;color:var(--muted)}
+    .success{margin-top:14px;padding:10px;border-radius:8px;background:#0e2a19;color:#9ff3c6;border:1px solid #1d6b49;display:none}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <h1>Alegerea logo-ului / Logo-Auswahl</h1>
+
+      <p class="muted" id="intro-ro">
+        Test de feedback vizual pentru alegerea logo-ului final al aplicației de organizare a timpului.
+        Alege logo-ul care ți se pare mai potrivit și răspunde la câteva întrebări scurte.
+      </p>
+      <p class="muted" id="intro-de" style="display:none">
+        Visuelles Feedback für die Auswahl des endgültigen Logos der Zeitmanagement-App.
+        Wähle das Logo, das dir besser gefällt, und beantworte ein paar kurze Fragen.
+      </p>
+
+      <div class="lang-switch">
+        <button type="button" data-lang="ro" class="active">Ro</button>
+        <button type="button" data-lang="de">De</button>
+      </div>
+
+      <div class="hero">
+        <img src="assets/compare.png" alt="Timora PRO vs Flowin" />
+      </div>
+
+      <!-- Formular Netlify -->
+      <form name="logo-vote" method="POST" data-netlify="true">
+        <input type="hidden" name="form-name" value="logo-vote">
+        <input type="hidden" name="lang" id="langField" value="ro">
+
+        <!-- Q1 -->
+        <fieldset>
+          <legend id="q1-legend">Care logo ți se pare mai potrivit?</legend>
+          <label><input type="radio" name="choice" value="Timora PRO" required>
+            <span id="lbl-choice-timora">Timora PRO</span>
+          </label>
+          <label><input type="radio" name="choice" value="Flowin">
+            <span id="lbl-choice-flowin">Flowin</span>
+          </label>
+        </fieldset>
+
+        <!-- Q2 -->
+        <fieldset>
+          <legend id="q2-legend">De ce ai ales acest logo?</legend>
+          <textarea id="reason" name="reason" rows="3" placeholder="Răspuns scurt" required></textarea>
+        </fieldset>
+
+        <!-- Q3 -->
+        <fieldset>
+          <legend id="q3-legend">Care pare mai modern și profesionist?</legend>
+          <label><input type="radio" name="modern" value="Timora PRO" required>
+            <span id="lbl-modern-timora">Timora PRO</span>
+          </label>
+          <label><input type="radio" name="modern" value="Flowin">
+            <span id="lbl-modern-flowin">Flowin</span>
+          </label>
+          <label><input type="radio" name="modern" value="Ambele">
+            <span id="lbl-modern-both">Ambele</span>
+          </label>
+          <label><input type="radio" name="modern" value="Niciunul">
+            <span id="lbl-modern-none">Niciunul</span>
+          </label>
+        </fieldset>
+
+        <!-- Q4 -->
+        <fieldset>
+          <legend id="q4-legend">Ce impresie îți transmite logo-ul preferat?</legend>
+          <div class="row">
+            <label><input type="radio" name="feel" value="Modern" required>
+              <span id="lbl-feel-modern">Modern</span>
+            </label>
+            <label><input type="radio" name="feel" value="Calm">
+              <span id="lbl-feel-calm">Calm</span>
+            </label>
+            <label><input type="radio" name="feel" value="Elegant">
+              <span id="lbl-feel-elegant">Elegant</span>
+            </label>
+            <label><input type="radio" name="feel" value="Dinamic">
+              <span id="lbl-feel-dynamic">Dinamic</span>
+            </label>
+            <label><input type="radio" name="feel" value="Tehnologic">
+              <span id="lbl-feel-tech">Tehnologic</span>
+            </label>
+          </div>
+        </fieldset>
+
+        <!-- Q5 -->
+        <fieldset>
+          <legend id="q5-legend">Sugestii de îmbunătățire (opțional)</legend>
+          <textarea id="suggestions" name="suggestions" rows="2" placeholder="Opțional"></textarea>
+        </fieldset>
+
+        <div class="actions">
+          <button class="btn" type="submit" id="submitLabel">Trimite</button>
+          <button class="btn secondary" type="reset" id="resetLabel">Resetează</button>
+        </div>
+
+        <p class="note" id="gdpr">
+          Trimiterea acestui formular înseamnă că ești de acord ca răspunsurile tale să fie prelucrate pentru analiza preferințelor de brand.
+        </p>
+
+        <div id="msg" class="success"></div>
+      </form>
+
+      <div class="footer" style="text-align:center;margin-top:16px;color:#a9b2cc;font-size:13px;">
+        © 2025 Bughy Tech
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const langBtns=document.querySelectorAll('.lang-switch button');
+    const introRo=document.getElementById('intro-ro');
+    const introDe=document.getElementById('intro-de');
+    const langField=document.getElementById('langField');
+    const msg=document.getElementById('msg');
+
+    const t={
+      ro:{submit:'Trimite',reset:'Resetează',success:'Mulțumim! Răspunsul a fost înregistrat.'},
+      de:{submit:'Senden',reset:'Zurücksetzen',success:'Danke! Deine Antwort wurde gespeichert.'}
+    };
+
+    function setLang(code){
+      langBtns.forEach(b=>b.classList.toggle('active',b.dataset.lang===code));
+      introRo.style.display=(code==='ro')?'':'none';
+      introDe.style.display=(code==='de')?'':'none';
+      langField.value=code;
+      const d=t[code];
+      document.getElementById('submitLabel').textContent=d.submit;
+      document.getElementById('resetLabel').textContent=d.reset;
+      msg.textContent=d.success;
+    }
+
+    langBtns.forEach(b=>b.addEventListener('click',()=>setLang(b.dataset.lang)));
+    setLang('ro');
+
+    document.querySelector('form').addEventListener('submit',()=>{
+      msg.style.display='block';
+      setTimeout(()=>msg.style.display='none',4000);
+    });
+  </script>
+</body>
+</html>
